@@ -40,17 +40,29 @@ fn main() {
     // Client thread
     let client = thread::spawn(move || {
         connect("ws://127.0.0.1:3012", |out| {
-            out.send("Hello WebSocket").unwrap();
+            out.send("Hello WebSocket1111").unwrap();
 
             move |msg| {
-                println!("Client got message '{}'. ", msg);
+                println!("Client1 got message '{}'. ", msg);
                 out.close(CloseCode::Normal)
             }
         }).unwrap()
     });
 
+    let client2 = thread::spawn(move || {
+        connect("ws://127.0.0.1:3012", |out| {
+            out.send("Hello WebSocket2222").unwrap();
+
+            move |msg| {
+                println!("Client2 got message '{}'. ", msg);
+                out.close(CloseCode::Normal)
+            }
+        }).unwrap()
+    });
+
+
     let _ = server.join();
     let _ = client.join();
-
+    let _ = client2.join();
     println!("All done.")
 }

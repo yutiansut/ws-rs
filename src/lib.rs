@@ -275,8 +275,8 @@ pub struct WebSocket<F>
 where
     F: Factory,
 {
-    poll: Poll,
-    handler: io::Handler<F>,
+    pub poll: Poll,
+    pub handler: io::Handler<F>,
 }
 
 impl<F> WebSocket<F>
